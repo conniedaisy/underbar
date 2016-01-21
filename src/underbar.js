@@ -172,6 +172,7 @@
     for (var i=index; i<collection.length; i++) {
       accumulatedValue = iterator(accumulatedValue, collection[i]);
     }
+    return accumulatedValue;
   };
 
   // Determine if the array or object contains a given value (using `===`).
