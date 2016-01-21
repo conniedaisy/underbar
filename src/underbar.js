@@ -167,7 +167,7 @@
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
     var startValue, index, accumulatedValue=startValue;
-    if (arguments>=3) {startValue=accumulator; index=0;}
+    if (arguments.length>=3) {startValue=accumulator; index=0;}
     else {startValue=collection[0]; index=1;}
     for (var i=index; i<collection.length; i++) {
       accumulatedValue = iterator(accumulatedValue, collection[i]);
