@@ -61,6 +61,7 @@
       });
     });
 
+//'each' started on
     describe('each', function() {
       checkForNativeMethods(function() {
         _.each([1,2,3,4], function(number) {});
@@ -79,9 +80,16 @@
         var input = [1,2,3,4,5];
         var result = _.each(input, function(item) { /* noop */ });
 
-      it('should iterate over arrays and provide access to each value', function(arr, iteration){
-        for (var i=0; i<arr.length; i++) {
-          iteration(arr[i]);
+      it('should iterate over arrays and provide access to each value', function(collection, iteration){
+        if (Array.isArray(collection)) {
+          for (var i=0; i<arr.length; i++) {
+            iteration(collection[i]);
+          }
+        }
+        else {
+          for (var key in collection) {
+            iteration(collection[key]);
+          }
         }
       });
 
