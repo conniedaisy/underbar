@@ -166,9 +166,9 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-    var startValue, index, accumulatedValue=startValue;
-    if (arguments.length>=3) {startValue=accumulator; index=0;}
-    else {startValue=collection[0]; index=1;}
+    var startValue, index, accumulatedValue;
+    if (arguments.length>=3) {startValue=accumulator; index=0; accumulatedValue=startValue;}
+    else {startValue=collection[0]; index=1; accumulatedValue=startValue;}
     for (var i=index; i<collection.length; i++) {
       accumulatedValue = iterator(accumulatedValue, collection[i]);
     }
