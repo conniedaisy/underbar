@@ -48,8 +48,9 @@
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
     if (Array.isArray(collection)) {
-      for (var index=0; index<collection.length; index++) {
-        iterator(collection[index]);
+      for (var i=0; i<collection.length; i++) {
+        iterator(collection[i]);
+        var index = i;
       }
     }
     else {
