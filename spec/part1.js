@@ -79,6 +79,12 @@
         var input = [1,2,3,4,5];
         var result = _.each(input, function(item) { /* noop */ });
 
+      it('should iterate over arrays and provide access to each value', function(arr, iteration){
+        for (var i=0; i<arr.length; i++) {
+          iteration(arr[i]);
+        }
+      });
+
         /*
          * Mutation of inputs should be avoided without good justification otherwise
          * as it can often lead to hard to find bugs and confusing code!
