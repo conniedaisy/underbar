@@ -3,6 +3,8 @@
 
   describe('Part I', function() {
 
+
+//'identity': given
     describe('identity', function() {
       checkForNativeMethods(function() {
         _.identity(1);
@@ -14,9 +16,11 @@
         expect(_.identity('string')).to.equal('string');
         expect(_.identity(false)).to.be.false;
         expect(_.identity(uniqueObject)).to.equal(uniqueObject);
+        expect(_.identity(undefined)).to.equal(1);
       });
     });
 
+//'first': given
     describe('first', function() {
       checkForNativeMethods(function() {
         _.first([1,2,3]);
@@ -39,6 +43,7 @@
       });
     });
 
+//'last': given
     describe('last', function() {
       checkForNativeMethods(function() {
         _.last([1,2,3]);
@@ -61,7 +66,7 @@
       });
     });
 
-//'each' started on
+//'each': started on
     describe('each', function() {
       checkForNativeMethods(function() {
         _.each([1,2,3,4], function(number) {});
@@ -79,19 +84,6 @@
       it('should not mutate the input array', function() {
         var input = [1,2,3,4,5];
         var result = _.each(input, function(item) { /* noop */ });
-
-      it('should iterate over arrays and provide access to each value', function(collection, iteration){
-        if (Array.isArray(collection)) {
-          for (var i=0; i<arr.length; i++) {
-            iteration(collection[i]);
-          }
-        }
-        else {
-          for (var key in collection) {
-            iteration(collection[key]);
-          }
-        }
-      });
 
         /*
          * Mutation of inputs should be avoided without good justification otherwise
