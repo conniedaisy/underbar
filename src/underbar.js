@@ -49,8 +49,7 @@
   _.each = function(collection, iterator) {
     if (Array.isArray(collection)) {
       for (var i=0; i<collection.length; i++) {
-        iterator(collection[i]);
-        var index = i;
+        iterator(collection[i], i, collection);
       }
     }
     else {
