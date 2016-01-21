@@ -54,7 +54,7 @@
     }
     else {
       for (var key in collection) {
-        iterator(collection[key]);
+        iterator(collection[key], key, collection);
       }
     }
   };
