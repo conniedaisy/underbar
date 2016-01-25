@@ -287,7 +287,43 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    //initialize table
+    var table = {};
+    var newFunc = function(funcArgs) {
+      var result; 
+      //check if funcArgs exists in table
+      for (var k in table) {
+        if (funcArgs == k) {
+          result = table[k];
+          return result;
+        }
+      }
+      //if we get here, result has not been stored, so we will compute, store, and return result
+      result = func(funcArgs);
+      table[funcArgs] = result;
+      return result;
+    };
+    return newFunc;
   };
+
+  //command + d
+
+//Example: func(funcArgs) --> sin(x)
+//var sin30 = sin(30);
+//var sin30 = sin(30); --> slow both times
+//var aSin = memoize(sin); --> function objects
+//var aSin30 = aSin(30);
+//var aSin30 = aSin(30); --> should be faster, come from table
+//intialize table
+//check table
+//add to table
+//don't call func more than once, slow
+
+//to do:
+//look into sublime tricks
+//read other people pseudo code
+//emacs
+
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
