@@ -3,8 +3,6 @@
 
   window._ = {};
 
-//SECTION I
-
   // Returns whatever value is passed as the argument. This function doesn't
   // seem very useful, but remember it--if a function needs to provide an
   // iterator when the user does not pass one in, this will be handy.
@@ -114,15 +112,8 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
-    var newObj={}, resultArr=[];
-    for(var i=0; i<array.length; i++) {
-      if (!(newObj[array[i]])) {
-        newObj[array[i]]=true;
-        resultArr.push(array[i]);
-      }
-    }
-    return resultArr;
   };
+
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
@@ -184,8 +175,6 @@
     return accumulatedValue;
   };
 
-//SECTION II
-
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
@@ -202,6 +191,10 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    for (var i=0; i<=collection.length; i++) {
+      if (!(iterator(collection[i])) {return false;}
+      else {return true;}
+    }
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
