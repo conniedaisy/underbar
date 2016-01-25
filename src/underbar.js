@@ -332,6 +332,24 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    //pseudo code
+    //wait --> built-in JS function
+    //run function: func(extraArguments)
+
+    var argList = [];
+    if (arguments.length>2) {
+      //get arguments[2]-arguments[arguments.length-1]
+      for(var i=2; i<=arguments.length; i++) {
+        argList.push(arguments[i]);
+      }
+      //to pass arguments through func, google how to splat in JS
+      return setTimeOut(func.apply(argList), wait);
+    } 
+    else { //func has no arguments
+      return setTimeOut(func());
+    } 
+
+    //alternatively, don't use if/else, slice arguments, splat, if no extraArguments, will return empty list.
   };
 
 
