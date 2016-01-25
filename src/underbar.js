@@ -364,8 +364,28 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var arrayCopy = array;
+    var result = [];
+
+    var getRandomInt = function(min, max) {
+      var randomInt = Math.floor(Math.random()*((max+1)-min)+min);
+      return randomInt;
+    }
+
+    while (arrayCopy.length>0) {
+      //look up random int between 0 and arrayCopy.length-1
+      var randomIndex = getRandomInt(0, (arrayCopy.length-1));
+      result.push(arrayCopy[randomIndex]);
+      arrayCopy.slice(randomIndex, 1);
+      //this is slow because arrays are slow to delete, linked lists are slow to look up
+    }
+    //alternatively, use for loop?
+
+    return result;
   };
 
+  //knuth shuffle
+  //sublime auto format shortcut
 
   /**
    * ADVANCED
