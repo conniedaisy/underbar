@@ -368,17 +368,19 @@
     var result = [];
 
     var getRandomInt = function(min, max) {
-      var randomInt = Math.floor(Math.random()*((max+1)-min)+min);
+      var randomInt = Math.floor(Math.random()*(max-min+1)+min);
       return randomInt;
     }
+    //getRandomInt(0,2) --> Math.floor(0.99*3) --> get 0, 1, 2
 
-    while (arrayCopy.length>0) {
+    while (arrayCopy.length>1) {
       //look up random int between 0 and arrayCopy.length-1
       var randomIndex = getRandomInt(0, (arrayCopy.length-1));
       result.push(arrayCopy[randomIndex]);
       arrayCopy.slice(randomIndex, 1);
       //this is slow because arrays are slow to delete, linked lists are slow to look up
     }
+    result.push(arrayCopy[0]);
     //alternatively, use for loop?
 
     return result;
