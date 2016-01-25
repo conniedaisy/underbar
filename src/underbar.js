@@ -192,7 +192,7 @@
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
     for (var i=0; i<=collection.length; i++) {
-      if (!(iterator(collection[i])) {return false;}
+      if (!(iterator(collection[i]))) {return false;}
       else {return true;}
     }
   };
