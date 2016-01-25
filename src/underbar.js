@@ -364,7 +364,7 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-    var arrayCopy = array;
+    var arrayCopy = array.slice(0);
     var result = [];
 
     var getRandomInt = function(min, max) {
@@ -373,14 +373,15 @@
     }
     //getRandomInt(0,2) --> Math.floor(0.99*3) --> get 0, 1, 2
 
-    while (arrayCopy.length>1) {
+    while (arrayCopy.length>0) {
       //look up random int between 0 and arrayCopy.length-1
-      var randomIndex = getRandomInt(0, (arrayCopy.length-1));
+      //var randomIndex = getRandomInt(0, (arrayCopy.length-1)); --> delete
+      var randomIndex = Math.floor(Math.random()*arrayCopy.length);
       result.push(arrayCopy[randomIndex]);
       arrayCopy.slice(randomIndex, 1);
       //this is slow because arrays are slow to delete, linked lists are slow to look up
     }
-    result.push(arrayCopy[0]);
+    //result.push(arrayCopy[0]); --> delete
     //alternatively, use for loop?
 
     return result;
