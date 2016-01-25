@@ -186,6 +186,7 @@
 
 //SECTION II
 
+//GIVEN, DO NOT UNDERSTAND
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
@@ -198,16 +199,25 @@
     }, false);
   };
 
-
+//FINISHED
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+      for (var i=0; i<=collection.length; i++) {
+        if (!(iterator(collection[i])) {return false;}
+        else {return true;}
+      }
   };
 
+//FINISHED, DOES NOT INCLUDE DEFAULT ITERATOR
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    for (var i=0; i<=collection.length; i++) {
+      if (iterator(collection[i])) {return true;}
+      else {return false;}
+    }
   };
 
 
@@ -229,12 +239,27 @@
   //   }, {
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
+//FINISHED
   _.extend = function(obj) {
+    for (var i=1; i<arguments.length; i++) {
+      for (var k in i) {
+        obj[k] = i[k];
+      }
+    }
   };
 
+//FINISHED
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    //first checks if key already exists in obj
+    for (var i=1; i<arguments.length; i++) {
+      for (var k in i) {
+        if (obj[k]!=null) {
+          obj[k] = i[k];
+        }
+      }
+    }
   };
 
 
@@ -246,6 +271,7 @@
    * and return out a new version of the function that works somewhat differently
    */
 
+//GIVEN
   // Return a function that can be called at most one time. Subsequent calls
   // should return the previously returned value.
   _.once = function(func) {
@@ -269,7 +295,7 @@
     };
   };
 
-  // Memorize an expensive function's results by storing them. You may assume
+  // Memoize an expensive function's results by storing them. You may assume
   // that the function only takes primitives as arguments.
   // memoize could be renamed to oncePerUniqueArgumentList; memoize does the
   // same thing as once, but based on many sets of unique arguments.
@@ -277,8 +303,45 @@
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
+//FINISHED
   _.memoize = function(func) {
+    //initialize table
+    var table = {};
+    var newFunc = function(funcArgs) {
+      var result; 
+      //check if funcArgs exists in table
+      for (var k in table) {
+        if (funcArgs == k) {
+          result = table[k];
+          return result;
+        }
+      }
+      //if we get here, result has not been stored, so we will compute, store, and return result
+      result = func(funcArgs);
+      table[funcArgs] = result;
+      return result;
+    };
+    return newFunc;
   };
+
+//command + d
+
+//Example: func(funcArgs) --> sin(x)
+//var sin30 = sin(30);
+//var sin30 = sin(30); --> slow both times
+//var aSin = memoize(sin); --> function objects
+//var aSin30 = aSin(30);
+//var aSin30 = aSin(30); --> should be faster, come from table
+//intialize table
+//check table
+//add to table
+//don't call func more than once, slow
+
+//to do:
+//look into sublime tricks
+//read other people pseudo code
+//emacs
+
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
@@ -286,8 +349,29 @@
   // The arguments for the original function are passed after the wait
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
+//COMPLETED
   _.delay = function(func, wait) {
+
+    //pseudo code
+    //wait --> built-in JS function
+    //run function: func(extraArguments)
+
+    var argList = [];
+    if (arguments.length>2) {
+      //get arguments[2]-arguments[arguments.length-1]
+      for(var i=2; i<=arguments.length; i++) {
+        argList.push(arguments[i]);
+      }
+      //to pass arguments through func, google how to splat in JS
+      return setTimeOut(func.apply(argList), wait);
+    } 
+    else { //func has no arguments
+      return setTimeOut(func());
+    } 
+
+    //alternatively, don't use if/else, slice arguments, splat, if no extraArguments, will return empty list.
   };
+
 
 
   /**
@@ -300,8 +384,30 @@
   // TIP: This function's test suite will ask that you not modify the original
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
+//COMPLETED
   _.shuffle = function(array) {
+    var arrayCopy = array;
+    var result = [];
+
+    var getRandomInt = function(min, max) {
+      var randomInt = Math.floor(Math.random()*((max+1)-min)+min);
+      return randomInt;
+    }
+
+    while (arrayCopy.length>0) {
+      //look up random int between 0 and arrayCopy.length-1
+      var randomIndex = getRandomInt(0, (arrayCopy.length-1));
+      result.push(arrayCopy[randomIndex]);
+      arrayCopy.slice(randomIndex, 1);
+      //this is slow because arrays are slow to delete, linked lists are slow to look up
+    }
+    //alternatively, use for loop?
+
+    return result;
   };
+
+  //knuth shuffle
+  //sublime auto format shortcut
 
 
   /**
