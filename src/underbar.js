@@ -184,7 +184,7 @@
         return true;
       }
       return item === target;
-    }, true);
+    }, false);
   };
 
 
