@@ -270,6 +270,18 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+        var newProps=Array.prototype.slice.call(arguments, 1);
+
+    _.each(newProps, function(newObj) {
+      _.each(newObj, function(val, key) {
+        if (obj[key]===undefined) {
+          obj[key]=val;
+        }
+      });
+    });
+
+    return obj;
+
   };
 
 
