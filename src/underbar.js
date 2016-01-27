@@ -208,7 +208,6 @@
     }
     */
     var iterator=iterator || _.identity(iterator);
-    /*
     return _.reduce(collection, function(test, value) {
       if (test) {
         return !!iterator(value);
@@ -216,10 +215,6 @@
         return false;
       }
     }, true);
-*/
-      return _.reduce(collection, function(allPassed, element) {
-         return allPassed && ((iterator === undefined ? _.identity(element) : iterator(element)) ? true : false);
-      }, true);
 
   };
 
