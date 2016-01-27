@@ -244,6 +244,8 @@
       }
     }
   };*/
+
+  /*
   _.extend = function(obj) {
     _.each(arguments, function(argumentIndex) {
       _.each(argumentIndex, function(value, key){
@@ -264,6 +266,7 @@
       })
     }) 
   };
+  */
 
 
   /**
@@ -309,7 +312,6 @@
     //initialize table
     var table = {};
     var funcArgs = Array.prototype.slice.call(arguments);
-
     var newFunc = function(funcArgs) {
       if(table[funcArgs]===undefined) {
         table[funcArgs]=func.apply(this, funcArgs);
