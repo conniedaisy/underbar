@@ -245,7 +245,7 @@
     }
   };*/
 
-  /*
+
   _.extend = function(obj) {
     _.each(arguments, function(argumentIndex) {
       _.each(argumentIndex, function(value, key){
@@ -266,7 +266,6 @@
       })
     }) 
   };
-  */
 
 
   /**
@@ -279,6 +278,8 @@
 
   // Return a function that can be called at most one time. Subsequent calls
   // should return the previously returned value.
+
+/*
   _.once = function(func) {
     // TIP: These variables are stored in a "closure scope" (worth researching),
     // so that they'll remain available to the newly-generated function every
@@ -299,6 +300,8 @@
       return result;
     };
   };
+  */
+
 
   // Memoize an expensive function's results by storing them. You may assume
   // that the function only takes primitives as arguments.
