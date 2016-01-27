@@ -112,6 +112,14 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var newObj={}, resultArr=[];
+    for(var i=0; i<array.length; i++) {
+      if (!(newObj[array[i]])) {
+        newObj[array[i]]=true;
+        resultArr.push(array[i]);
+      }
+    }
+    return resultArr;
   };
 
 
