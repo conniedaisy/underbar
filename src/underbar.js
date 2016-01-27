@@ -297,7 +297,7 @@
     };
   };
 
-  // Memorize an expensive function's results by storing them. You may assume
+  // Memoize an expensive function's results by storing them. You may assume
   // that the function only takes primitives as arguments.
   // memoize could be renamed to oncePerUniqueArgumentList; memoize does the
   // same thing as once, but based on many sets of unique arguments.
@@ -308,20 +308,14 @@
   _.memoize = function(func) {
     //initialize table
     var table = {};
+    var funcArgs = Array.prototype.slice.call(arguments);
+
     var newFunc = function(funcArgs) {
-      var result; 
-      //check if funcArgs exists in table
-      for (var k in table) {
-        if (funcArgs == k) {
-          result = table[k];
-          return result;
-        }
+      if(table[funcArgs]===undefined) {
+        table[funcArgs]=func.apply(this, funcArgs);
       }
-      //if we get here, result has not been stored, so we will compute, store, and return result
-      result = func(funcArgs);
-      table[funcArgs] = result;
-      return result;
-    };
+      return table[funcArgs];
+    }
     return newFunc;
   };
 
