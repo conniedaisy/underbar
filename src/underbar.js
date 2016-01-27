@@ -208,13 +208,13 @@
     }
     */
     var iterator=iterator || _.identity(iterator);
-    return _.reduce(collection, function(test, value) {
-      if (test) {
-        return !!iterator(value);
+    return _.reduce(collection, function (memo, item) {
+      if (iterator === undefined) {
+        return !memo ? false : item ? true : false;
       } else {
-        return false;
+        return !memo ? false : iterator(item) ? true : false;
       }
-    }, true);
+    }, true)
 
   };
 
