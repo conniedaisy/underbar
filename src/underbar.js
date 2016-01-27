@@ -361,20 +361,28 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-       var newArray=array.slice(0);
-    var temporaryValue;
-    var randomIndex;
+        var shuffled = [];
+    var randomIndexes = [];
 
-    for (var index = newArray.length; index>0; index--) {
-      randomIndex = Math.floor(Math.random() * index);
+    var shufflin = function () {
+      // Generate random index number
+      var randomIndex = Math.floor(Math.random() * array.length);
+      // Stop generating numbers when shuffled array is same length as original
+      while (shuffled.length !== array.length) {
+        // If random index has not been used, add the value to the shuffled 
+        // array and used index to randomIndexes array
+        if (!_.contains(randomIndexes, randomIndex)) {
+          shuffled.push(array[randomIndex]);
+          randomIndexes.push(randomIndex);
+        } else {
+          // If random index has already been used, recursion on this function
+          shufflin();
+        };
+      };
+    };
 
-      temporaryValue = newArray[index];
-      newArray[index] = newArray[randomIndex];
-      newArray[randomIndex] = temporaryValue;
-    }
-
-    return newArray;
-
+    shufflin();
+    return shuffled;
   };
 
 
