@@ -183,6 +183,7 @@
     return accumulatedValue;
   };
 
+//PART II
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
@@ -234,24 +235,34 @@
   //   }, {
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
-  _.extend = function(obj) {
+  
+  //Assumes arguments are objects, which is not necessarily true
+  /*_.extend = function(obj) {
     for (var i=1; i<arguments.length; i++) {
       for (var k in i) {
         obj[k] = i[k];
       }
     }
+  };*/
+  _.extend = function(obj) {
+    _.each(arguments, function(argumentIndex) {
+      _.each(argumentIndex, function(value, key){
+        obj[key] = value;
+      })
+    })
   };
+
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
-    for (var i=1; i<arguments.length; i++) {
-      for (var k in i) {
-        if (obj[k]!=null) {
-          obj[k] = i[k];
+    _.each(arguments, function(argumentIndex) {
+      _.each(argumentIndex, function(value, key){
+        if (obj[key]==undefined) {
+          obj[key] = value;
         }
-      }
-    }
+      })
+    }) 
   };
 
 
