@@ -207,16 +207,12 @@
       else {return true;}
     }
     */
-    var iterator=iterator || _.identity(iterator);
-    return _.reduce(collection, function (memo, item) {
-      if (iterator === undefined) {
-        return !memo ? false : item ? true : false;
-      } else {
-        return !memo ? false : iterator(item) ? true : false;
-      }
-    }, true)
+    iterator = iterator || _.identity;
+    return _.reduce(collection,function(accumulator,element,i,array){
+      return Boolean(accumulator && (iterator(element) || Object.keys(collection).length === 0));
+    }
+    ,true)};
 
-  };
 
 
 
