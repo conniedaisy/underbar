@@ -200,13 +200,22 @@
     */
 
     //for each item in collection, check if equals to (===) target
-    //if yes, return
+    //if yes, return true
+    /* ONLY WORKS FOR ARRAYS NOT OBJECTs
     for (var i = 0; i < collection.length; i++) {
       if (collection[i] === target) {
         return true;
       }
       return false;
     }
+    */
+
+    return _.each(collection, function(item) {
+      if (item === target) {
+        return true;
+      }
+      return false;
+    });
 
   };
 
