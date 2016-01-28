@@ -3,8 +3,6 @@
 
   window._ = {};
 
-//SECTION I
-
   // Returns whatever value is passed as the argument. This function doesn't
   // seem very useful, but remember it--if a function needs to provide an
   // iterator when the user does not pass one in, this will be handy.
@@ -124,6 +122,7 @@
     return resultArr;
   };
 
+
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
     // map() is a useful primitive iteration function that works a lot
@@ -184,7 +183,7 @@
     return accumulatedValue;
   };
 
-//SECTION II
+//PART II
 
 //GIVEN, DO NOT UNDERSTAND
   // Determine if the array or object contains a given value (using `===`).
@@ -203,6 +202,7 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+<<<<<<< HEAD
       for (var i=0; i<=collection.length; i++) {
         if (!(iterator(collection[i])) {return false;}
         else {return true;}
@@ -210,14 +210,40 @@
   };
 
 //FINISHED, DOES NOT INCLUDE DEFAULT ITERATOR
+=======
+    /*
+    for (var i=0; i<=collection.length; i++) {
+      if (!(iterator(collection[i]))) {return false;}
+      else {return true;}
+    }
+    */
+    iterator = iterator || _.identity;
+    return _.reduce(collection,function(accumulator,element,i,array) {
+      return Boolean(accumulator && (iterator(element) || Object.keys(collection).length === 0));
+    }, true)
+  };
+
+
+>>>>>>> part2
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+<<<<<<< HEAD
     for (var i=0; i<=collection.length; i++) {
       if (iterator(collection[i])) {return true;}
       else {return false;}
     }
+=======
+    return !(_.every(collection, function(item) {
+      if (iterator === undefined) {
+        return !item;
+      } 
+      else {
+        return !iterator(item);
+      };
+    }));
+>>>>>>> part2
   };
 
 
@@ -241,27 +267,29 @@
   //   }); // obj1 now contains key1, key2, key3 and bla
 //FINISHED
   _.extend = function(obj) {
-    for (var i=1; i<arguments.length; i++) {
-      for (var k in i) {
-        obj[k] = i[k];
-      }
-    }
+    var newObjs=Array.prototype.slice.call(arguments, 1);
+    _.each(newObjs, function(otherObj) {
+      _.each(otherObj, function(val, key) {
+        obj[key]=val;
+      });
+    });
+    return obj;
   };
 
 //FINISHED
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
-    //first checks if key already exists in obj
-    for (var i=1; i<arguments.length; i++) {
-      for (var k in i) {
-        if (obj[k]!=null) {
-          obj[k] = i[k];
+    var newArgs=Array.prototype.slice.call(arguments, 1);
+    _.each(newArgs, function(newObj) {
+      _.each(newObj, function(val, key) {
+        if (obj[key]===undefined) {
+          obj[key]=val;
         }
-      }
-    }
+      });
+    });
+    return obj;
   };
-
 
   /**
    * FUNCTIONS
@@ -280,7 +308,6 @@
     // time it's called.
     var alreadyCalled = false;
     var result;
-
     // TIP: We'll return a new function that delegates to the old one, but only
     // if it hasn't been called before.
     return function() {
@@ -290,7 +317,6 @@
         result = func.apply(this, arguments);
         alreadyCalled = true;
       }
-      // The new function always returns the originally computed result.
       return result;
     };
   };
@@ -305,23 +331,14 @@
   // instead if possible.
 //FINISHED
   _.memoize = function(func) {
-    //initialize table
-    var table = {};
-    var newFunc = function(funcArgs) {
-      var result; 
-      //check if funcArgs exists in table
-      for (var k in table) {
-        if (funcArgs == k) {
-          result = table[k];
-          return result;
-        }
+    var table={};
+    return function() {
+      var args=Array.prototype.slice.call(arguments);
+      if(table[args]===undefined) {
+        table[args]=func.apply(this, args);
       }
-      //if we get here, result has not been stored, so we will compute, store, and return result
-      result = func(funcArgs);
-      table[funcArgs] = result;
-      return result;
+      return table[args];
     };
-    return newFunc;
   };
 
 //command + d
@@ -351,28 +368,11 @@
   // call someFunction('a', 'b') after 500ms
 //COMPLETED
   _.delay = function(func, wait) {
-
-    //pseudo code
-    //wait --> built-in JS function
-    //run function: func(extraArguments)
-
-    var argList = [];
-    if (arguments.length>2) {
-      //get arguments[2]-arguments[arguments.length-1]
-      for(var i=2; i<=arguments.length; i++) {
-        argList.push(arguments[i]);
-      }
-      //to pass arguments through func, google how to splat in JS
-      return setTimeOut(func.apply(argList), wait);
-    } 
-    else { //func has no arguments
-      return setTimeOut(func());
-    } 
-
-    //alternatively, don't use if/else, slice arguments, splat, if no extraArguments, will return empty list.
+    var args=Array.prototype.slice.call(arguments, 2);
+    setTimeout(function() {
+      func.apply(this, args);
+    }, wait);
   };
-
-
 
   /**
    * ADVANCED COLLECTION OPERATIONS
@@ -386,29 +386,23 @@
   // http://mdn.io/Array.prototype.slice
 //COMPLETED
   _.shuffle = function(array) {
-    var arrayCopy = array;
-    var result = [];
-
-    var getRandomInt = function(min, max) {
-      var randomInt = Math.floor(Math.random()*((max+1)-min)+min);
-      return randomInt;
-    }
-
-    while (arrayCopy.length>0) {
-      //look up random int between 0 and arrayCopy.length-1
-      var randomIndex = getRandomInt(0, (arrayCopy.length-1));
-      result.push(arrayCopy[randomIndex]);
-      arrayCopy.slice(randomIndex, 1);
-      //this is slow because arrays are slow to delete, linked lists are slow to look up
-    }
-    //alternatively, use for loop?
-
-    return result;
+    var shuffled = [];
+    var randomIndexes = [];
+    var shuffling = function () {
+      var randomIndex = Math.floor(Math.random() * array.length);
+      while (shuffled.length !== array.length) {
+        if (!_.contains(randomIndexes, randomIndex)) {
+          shuffled.push(array[randomIndex]);
+          randomIndexes.push(randomIndex);
+        } 
+        else {
+          shuffling();
+        };
+      };
+    };
+    shuffling();
+    return shuffled;
   };
-
-  //knuth shuffle
-  //sublime auto format shortcut
-
 
   /**
    * ADVANCED
