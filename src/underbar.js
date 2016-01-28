@@ -207,21 +207,10 @@
       else {return true;}
     }
     */
- if (test===undefined){
-      test = _.identity;
-    }
-
-    /* If at any point we find a false test result, retain that 'false' for the
-      rest of the 'each' (called in reduce). We 'retain' a false value stored in
-      reduce's 'total'/accumulator with the if-test. If we haven't yet found a
-      false test result, return the Boolean of the result of the test on the item.
-      */
-    return _.reduce(collection, function(foundFalse, item) {
-      if (!foundFalse) {
-        return false;
-      }
-      return Boolean(test(item));
-    }, true);
+    iterator = iterator || _.identity;
+    return _.reduce(collection,function(accumulator,element,i,array) {
+      return Boolean(accumulator && (iterator(element) || Object.keys(collection).length === 0));
+    }, true)
   };
 
 
