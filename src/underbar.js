@@ -208,10 +208,16 @@
       else {return true;}
     }
     */
-    iterator = iterator || _.identity;
-    return _.reduce(collection,function(accumulator,element,i,array) {
-      return Boolean(accumulator && (iterator(element) || Object.keys(collection).length === 0));
-    }, true)
+    if(arguments.length < 2){
+      return _.reduce(collection, function(passes, item){
+        return (Boolean(item) && passes);
+      }, true);
+    }
+    else{
+      return _.reduce(collection, function(passes, item){
+        return (Boolean(iterator(item)) && passes);
+      }, true)
+    }
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
