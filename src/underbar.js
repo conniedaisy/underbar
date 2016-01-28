@@ -208,26 +208,24 @@
     }
     */
     iterator = iterator || _.identity;
-    return _.reduce(collection,function(accumulator,element,i,array){
+    return _.reduce(collection,function(accumulator,element,i,array) {
       return Boolean(accumulator && (iterator(element) || Object.keys(collection).length === 0));
-    }
-    ,true)};
-
-
+    }, true)
+  };
 
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
-      return !(_.every(collection, function(item) {
+    return !(_.every(collection, function(item) {
       if (iterator === undefined) {
         return !item;
-      } else {
+      } 
+      else {
         return !iterator(item);
       };
     }));
-
   };
 
 
@@ -251,22 +249,18 @@
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
     var newObjs=Array.prototype.slice.call(arguments, 1);
-
     _.each(newObjs, function(otherObj) {
       _.each(otherObj, function(val, key) {
         obj[key]=val;
       });
     });
-
     return obj;
-
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
-        var newProps=Array.prototype.slice.call(arguments, 1);
-
+    var newProps=Array.prototype.slice.call(arguments, 1);
     _.each(newProps, function(newObj) {
       _.each(newObj, function(val, key) {
         if (obj[key]===undefined) {
@@ -274,11 +268,8 @@
         }
       });
     });
-
     return obj;
-
   };
-
 
   /**
    * FUNCTIONS
@@ -296,7 +287,6 @@
     // time it's called.
     var alreadyCalled = false;
     var result;
-
     // TIP: We'll return a new function that delegates to the old one, but only
     // if it hasn't been called before.
     return function() {
@@ -320,14 +310,12 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
-
-        var answers={};
+    var answers={};
     return function() {
       var args=Array.prototype.slice.call(arguments);
       if(answers[args]===undefined) {
         answers[args]=func.apply(this, args);
       }
-
       return answers[args];
     };
   };
@@ -339,12 +327,11 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
-        var args=Array.prototype.slice.call(arguments, 2);
+    var args=Array.prototype.slice.call(arguments, 2);
     setTimeout(function() {
       func.apply(this, args);
     }, wait);
   };
-
 
   /**
    * ADVANCED COLLECTION OPERATIONS
@@ -357,30 +344,23 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-        var shuffled = [];
+    var shuffled = [];
     var randomIndexes = [];
-
-    var shufflin = function () {
-      // Generate random index number
+    var shuffling = function () {
       var randomIndex = Math.floor(Math.random() * array.length);
-      // Stop generating numbers when shuffled array is same length as original
       while (shuffled.length !== array.length) {
-        // If random index has not been used, add the value to the shuffled 
-        // array and used index to randomIndexes array
         if (!_.contains(randomIndexes, randomIndex)) {
           shuffled.push(array[randomIndex]);
           randomIndexes.push(randomIndex);
-        } else {
-          // If random index has already been used, recursion on this function
-          shufflin();
+        } 
+        else {
+          shuffling();
         };
       };
     };
-
-    shufflin();
+    shuffling();
     return shuffled;
   };
-
 
   /**
    * ADVANCED
