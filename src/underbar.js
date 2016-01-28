@@ -296,7 +296,6 @@
         result = func.apply(this, arguments);
         alreadyCalled = true;
       }
-      // The new function always returns the originally computed result.
       return result;
     };
   };
