@@ -209,13 +209,34 @@
       return false;
     }
     */
-
+    /*
     return _.each(collection, function(item) {
       if (item === target) {
         return true;
       }
       return false;
     });
+    */
+
+    if(Array.isArray(collection)) {
+      for (var i = 0; i < collection.length; i++) {
+        if (collection[i] === target) {
+        return true;
+        }
+      return false;
+      }
+    }
+    else {
+      for (var key in collection) {
+        if (key === target) {
+          return true;
+        }
+        else if (collection[key] === target) {
+          return true;
+        }
+        return false;
+      }
+    }
 
   };
 
