@@ -245,21 +245,53 @@
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
     /*
-    for (var i=0; i<=collection.length; i++) {
-      if (!(iterator(collection[i]))) {return false;}
-      else {return true;}
+    if (collection.length < 1) {return true;}
+
+    for (var i = 0; i < collection.length; i++) {
+      if (iterator(collection[i]) == undefined || null) {
+        return false;
+      }
+      return true;
     }
     */
-    if(arguments.length < 2){
+    /*
+    if(arguments.length < 2) {
       return _.reduce(collection, function(passes, item){
         return (Boolean(item) && passes);
       }, true);
     }
-    else{
+    else {
       return _.reduce(collection, function(passes, item){
         return (Boolean(iterator(item)) && passes);
       }, true)
     }
+    */
+
+    if(arguments.length < 2) {
+      return _.reduce(collection, function(a, b) {
+        //initially, true
+        return (Boolean(b && a)); //returns true/false and next value
+      }, true);
+    }
+    else {
+      return _.reduce(collection, function(a,b) {
+        return (Boolean(iterator(b) && a));
+      }, true);
+    }
+
+    //reduce:
+    //[1,2,3,4,5]
+    //sum = 1+2 = 3
+    //sum = 3+3 = 6
+    //sum = 6+4 = 10
+
+    //reduce:
+    //[true, false, true, false]
+    //initial: true
+    //Boolean(true) && true --> true && true
+    //Boolean (false) && (true && true) --> false && true&&true
+    //Boolean (true) && * (false && true && true) --> true &&
+
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
