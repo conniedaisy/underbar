@@ -426,22 +426,13 @@
     shuffling();
     return shuffled;
     */
-        var copy = array.slice();
+    var copy = array.slice();
     var shuffled = [];
-    //The random variable holds the random number we generate for placing at an index,
-    //but for now it's just declared.
     var random;
-    //The while loop continues to run as long as shuffled isn't as lengthy as the base array.
     while(shuffled.length < array.length){
-      //Random is assigned a value here, where that value is a random number between 0 and 1
-      //, multiplied by the length of the copied array, then rounded down, giving us a whole
-      //round number between 0 and the length of the copy array
-      random = Math.floor(Math.random() * copy.length);
-      //Then, copy.splice goes to the index supplied by random, cuts it out, returns it
-      //then shuffled concats that into it's array. 
+      random = Math.floor(Math.random() * copy.length); 
       shuffled = shuffled.concat(copy.splice(random,1 ));
     }
-    //then finally, we return the shuffled array.
     return shuffled;
   };
 
