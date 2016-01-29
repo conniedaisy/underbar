@@ -174,6 +174,7 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    
     var startValue, index, accumulatedValue;
     if (arguments.length>=3) {startValue=accumulator; index=0; accumulatedValue=startValue;}
     else {startValue=collection[0]; index=1; accumulatedValue=startValue;}
@@ -197,25 +198,6 @@
       }
       return item === target;
     }, false);
-    */
-
-    //for each item in collection, check if equals to (===) target
-    //if yes, return true
-    /* ONLY WORKS FOR ARRAYS NOT OBJECTs
-    for (var i = 0; i < collection.length; i++) {
-      if (collection[i] === target) {
-        return true;
-      }
-      return false;
-    }
-    */
-    /*
-    return _.each(collection, function(item) {
-      if (item === target) {
-        return true;
-      }
-      return false;
-    });
     */
 
     if(Array.isArray(collection)) {
@@ -244,33 +226,11 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
-    /*
-    if (collection.length < 1) {return true;}
-
-    for (var i = 0; i < collection.length; i++) {
-      if (iterator(collection[i]) == undefined || null) {
-        return false;
-      }
-      return true;
-    }
-    */
-    /*
-    if(arguments.length < 2) {
-      return _.reduce(collection, function(passes, item){
-        return (Boolean(item) && passes);
-      }, true);
-    }
-    else {
-      return _.reduce(collection, function(passes, item){
-        return (Boolean(iterator(item)) && passes);
-      }, true)
-    }
-    */
-
+  
     if(arguments.length < 2) {
       return _.reduce(collection, function(a, b) {
         //initially, true
-        return (Boolean(b && a)); //returns true/false and next value
+        return (Boolean(Boolean(b) && Boolean(a))); //returns true/false and next value
       }, true);
     }
     else {
@@ -278,19 +238,13 @@
         return (Boolean(iterator(b) && a));
       }, true);
     }
-
-    //reduce:
-    //[1,2,3,4,5]
-    //sum = 1+2 = 3
-    //sum = 3+3 = 6
-    //sum = 6+4 = 10
-
-    //reduce:
-    //[true, false, true, false]
-    //initial: true
-    //Boolean(true) && true --> true && true
-    //Boolean (false) && (true && true) --> false && true&&true
-    //Boolean (true) && * (false && true && true) --> true &&
+  
+    //expect(_.every([true, false, 1], _.identity)).to.be.false;
+      //-->true
+      //Boolean(true && true) --> true
+      //Boolean(false && true) --> false
+      //Boolean(1 && false) --> false
+    //expect(_.every([1, undefined, true], _.identity)).to.be.false;
 
   };
 
@@ -298,7 +252,7 @@
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
-    if(arguments.length < 2){
+    if(arguments.length < 2) {
       for(var i = 0; i < collection.length; i++){
         if(Boolean(collection[i])){
           return true;
@@ -313,8 +267,7 @@
       }
     }
     return false;
-  };
-
+  }
 
   /**
    * OBJECTS
@@ -455,6 +408,7 @@
   // http://mdn.io/Array.prototype.slice
 //COMPLETED
   _.shuffle = function(array) {
+    /*
     var shuffled = [];
     var randomIndexes = [];
     var shuffling = function () {
@@ -470,6 +424,24 @@
       };
     };
     shuffling();
+    return shuffled;
+    */
+        var copy = array.slice();
+    var shuffled = [];
+    //The random variable holds the random number we generate for placing at an index,
+    //but for now it's just declared.
+    var random;
+    //The while loop continues to run as long as shuffled isn't as lengthy as the base array.
+    while(shuffled.length < array.length){
+      //Random is assigned a value here, where that value is a random number between 0 and 1
+      //, multiplied by the length of the copied array, then rounded down, giving us a whole
+      //round number between 0 and the length of the copy array
+      random = Math.floor(Math.random() * copy.length);
+      //Then, copy.splice goes to the index supplied by random, cuts it out, returns it
+      //then shuffled concats that into it's array. 
+      shuffled = shuffled.concat(copy.splice(random,1 ));
+    }
+    //then finally, we return the shuffled array.
     return shuffled;
   };
 
