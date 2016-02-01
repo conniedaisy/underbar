@@ -231,7 +231,7 @@
       return _.reduce(collection, function(a, b) {
         //initially, true
         return (Boolean(Boolean(b) && Boolean(a))); //returns true/false and next value
-      }, true);
+      }, false);
     }
     else {
       return _.reduce(collection, function(a,b) {
