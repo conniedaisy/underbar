@@ -7,7 +7,9 @@
   // seem very useful, but remember it--if a function needs to provide an
   // iterator when the user does not pass one in, this will be handy.
   _.identity = function(val) {
-    return val === undefined ? 1 : val;
+    //return val === undefined ? 1 : val;
+    if (val===undefined) {return 1;}
+    else {return val;}
   };
 
   /**
@@ -176,8 +178,16 @@
   _.reduce = function(collection, iterator, accumulator) {
     
     var startValue, index, accumulatedValue;
-    if (arguments.length>=3) {startValue=accumulator; index=0; accumulatedValue=startValue;}
-    else {startValue=collection[0]; index=1; accumulatedValue=startValue;}
+
+    if (arguments.length>=3) {
+      startValue=accumulator; 
+      index=0; 
+      accumulatedValue=startValue;
+    } else {
+      startValue=collection[0]; 
+      index=1; 
+      accumulatedValue=startValue;
+    }
     for (var i=index; i<collection.length; i++) {
       accumulatedValue = iterator(accumulatedValue, collection[i]);
     }
@@ -227,23 +237,24 @@
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
   
+    
     if(arguments.length < 2) {
-      return _.reduce(collection, function(a, b) {
+      return _.reduce(collection, function(passed, newValue) { //collection, iterator
         //initially, true
-        return (Boolean(Boolean(b) && Boolean(a))); //returns true/false and next value
-      }, false);
-    }
-    else {
-      return _.reduce(collection, function(a,b) {
-        return (Boolean(iterator(b) && a));
+        return (Boolean(newValue && passed)); //returns true/false and next value
+      }, true); //accumulator
+    } else {
+      return _.reduce(collection, function(passed, newValue) {
+        return (Boolean(passed && (iterator(newValue===undefined ? false:newValue))));
       }, true);
     }
+    
   
     //expect(_.every([true, false, 1], _.identity)).to.be.false;
-      //-->true
-      //Boolean(true && true) --> true
-      //Boolean(false && true) --> false
-      //Boolean(1 && false) --> false
+      //true
+      //Boolean(identity(true)=true && true) --> true
+      //Boolean(identity(false)=false && true) --> false
+      //Boolean(identity(1)=true && false) --> false
     //expect(_.every([1, undefined, true], _.identity)).to.be.false;
 
   };
@@ -261,7 +272,7 @@
     }
     else{
       for(var i = 0; i < collection.length; i++){
-        if(iterator(collection[i])){
+        if(iterator(collection[i]===undefined? false:collection[i])){
           return true;
         }
       }
